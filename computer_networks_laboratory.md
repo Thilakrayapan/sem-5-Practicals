@@ -2806,3 +2806,129 @@ $ sed -n '1,12p' cwnd.dat
 **Conclusion:** The throughput is close to the 1 Mbps bottleneck capacity. TCP increases its congestion window until the queue overflows, loses packets, then reduces the window - so it adapts its sending rate to the congestion in the network.
 
 **Result:** The program was executed successfully and the output was verified.
+
+
+
+
+
+# Modified Codes for simplicity 
+#### 10th Question
+
+```java
+import java.util.*;
+
+public class RoutingComparison {
+    static int INF = 9999;
+
+    static int[][] distanceVector(int[][] g) {
+        int n = g.length;
+        int[][] d = new int[n][n];
+
+        for (int i = 0; i < n; i++)
+            d[i] = g[i].clone();
+
+        boolean change;
+        do {
+            change = false;
+            int[][] old = new int[n][n];
+
+            for (int i = 0; i < n; i++)
+                old[i] = d[i].clone();
+
+            for (int i = 0; i < n; i++)
+                for (int k = 0; k < n; k++)
+                    for (int j = 0; j < n; j++)
+                        if (g[i][k] < INF &&
+                            g[i][k] + old[k][j] < d[i][j]) {
+                            d[i][j] = g[i][k] + old[k][j];
+                            change = true;
+                        }
+        } while (change);
+
+        return d;
+    }
+
+    static int[] dijkstra(int[][] g, int src) {
+        int n = g.length;
+        int[] d = new int[n];
+        boolean[] visited = new boolean[n];
+
+        Arrays.fill(d, INF);
+        d[src] = 0;
+
+        for (int c = 0; c < n; c++) {
+            int u = -1;
+
+            for (int i = 0; i < n; i++)
+                if (!visited[i] && (u == -1 || d[i] < d[u]))
+                    u = i;
+
+            visited[u] = true;
+
+            for (int v = 0; v < n; v++)
+                if (g[u][v] < INF && d[u] + g[u][v] < d[v])
+                    d[v] = d[u] + g[u][v];
+        }
+        return d;
+    }
+
+    public static void main(String[] args) {
+        int[][] g = {
+            {0, 2, 5, INF, INF},
+            {2, 0, 1, 4, INF},
+            {5, 1, 0, 2, 6},
+            {INF, 4, 2, 0, 3},
+            {INF, INF, 6, 3, 0}
+        };
+
+        int n = g.length;
+        int[][] dv = distanceVector(g);
+
+        System.out.println("Distance Vector:");
+        for (int[] row : dv) {
+            for (int x : row)
+                System.out.print(x + " ");
+            System.out.println();
+        }
+
+        System.out.println("\nLink State (Dijkstra):");
+        boolean same = true;
+
+        for (int i = 0; i < n; i++) {
+            int[] ls = dijkstra(g, i);
+
+            for (int j = 0; j < n; j++) {
+                System.out.print(ls[j] + " ");
+                if (ls[j] != dv[i][j])
+                    same = false;
+            }
+            System.out.println();
+        }
+
+        System.out.println("\nBoth give same result: " + same);
+    }
+}
+```
+
+```bash
+Distance Vector Matrix:
+   0   2   3   5   8
+   2   0   1   3   6
+   3   1   0   2   5
+   5   3   2   0   3
+   8   6   5   3   0
+
+Link State (Dijkstra) Matrix:
+   0   2   3   5   8
+   2   0   1   3   6
+   3   1   0   2   5
+   5   3   2   0   3
+   8   6   5   3   0
+
+Both algorithms give same result: true
+
+```
+
+
+
+
