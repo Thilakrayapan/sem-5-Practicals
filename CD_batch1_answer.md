@@ -1,8 +1,3 @@
-# CS3501 - Compiler Design Practical Examination Lab Manual (Regulations 2021)
-
-This manual provides simple, precise, and complete solutions for all 20 questions from the **CS3501 Compiler Design** practical end-semester examination. Each solution includes a brief functional description, complete source code (C, LEX, and/or YACC as specified), compilation/execution commands, and sample input/output.
-
----
 
 ## Question 1: Lexical Analyzer in C (Identifiers and Constants)
 **Problem Statement:** Develop a program in C to design a lexical analyzer that recognizes identifiers and constants.
