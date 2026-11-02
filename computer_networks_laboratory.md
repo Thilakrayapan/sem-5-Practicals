@@ -2928,7 +2928,83 @@ Link State (Dijkstra) Matrix:
 Both algorithms give same result: true
 
 ```
+# 20 b
 
+'''tcl
+[02/11, 5:40 am] M23: set ns [new Simulator]
+
+set tf [open tcpperf.tr w]
+$ns trace-all $tf
+
+set nf [open tcpperf.nam w]
+$ns namtrace-all $nf
+
+set n0 [$ns node]
+set n1 [$ns node]
+
+$ns duplex-link $n0 $n1 1Mb 10ms DropTail
+
+set tcp [new Agent/TCP]
+$ns attach-agent $n0 $tcp
+
+set sink [new Agent/TCPSink]
+$ns attach-agent $n1 $sink
+
+$ns connect $tcp $sink
+
+set ftp [new Application/FTP]
+$ftp attach-agent $tcp
+
+proc finish {} {
+    global ns tf nf
+    $ns flush-trace
+    close $tf
+    close $nf
+    exec nam tcpperf.nam &
+    exit 0
+}
+
+$ns at 0.5 "$ftp start"
+$ns at 4.5 "$ftp stop"
+$ns at 5.0 "finish"
+
+$ns run
+'''
+'''awk
+BEGIN {
+    received = 0;
+    bytes = 0;
+    start = -1;
+    end = 0;
+}
+
+{
+    if ($1 == "r" && $3 == 1 && $4 == "tcp") {
+        received++;
+        bytes = bytes + $5;
+
+        if (start == -1)
+            start = $2;
+
+        end = $2;
+    }
+}
+
+END {
+    printf("\nTCP PERFORMANCE ANALYSIS\n");
+    printf("------------------------\n");
+    printf("Packets Received = %d\n", received);
+    printf("Total Bytes Received = %d\n", bytes);
+
+    if (end > start && start >= 0) {
+        throughput = (bytes * 8) / ((end - start) * 1000000);
+        printf("Throughput = %f Mbps\n", throughput);
+    }
+    else {
+        printf("Throughput = 0 Mbps\n");
+    }
+}
+'''
 
 
 
