@@ -2930,8 +2930,8 @@ Both algorithms give same result: true
 ```
 # 20 b
 
-'''tcl
-[02/11, 5:40 am] M23: set ns [new Simulator]
+```tcl
+set ns [new Simulator]
 
 set tf [open tcpperf.tr w]
 $ns trace-all $tf
@@ -2969,8 +2969,10 @@ $ns at 4.5 "$ftp stop"
 $ns at 5.0 "finish"
 
 $ns run
-'''
-'''awk
+```
+
+### throughout.awk
+```awk
 BEGIN {
     received = 0;
     bytes = 0;
@@ -3004,7 +3006,7 @@ END {
         printf("Throughput = 0 Mbps\n");
     }
 }
-'''
+```
 
 
 
