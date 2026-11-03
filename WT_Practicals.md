@@ -558,18 +558,18 @@ For a traditional Tomcat web application, create this structure:
 
 ```text
 EmployeeLogin/
+--- index.html
 └── WEB-INF/
     ├── web.xml
     ├── classes/
     │   └── LoginServlet.class
-    └── lib/
 ```
 
 Also create:
 
 ```text
 EmployeeLogin/
-└── employee.html
+└── index.html
 ```
 
 The `LoginServlet.java` source file can be kept in a separate working folder. After compiling it, copy the generated `LoginServlet.class` into `WEB-INF/classes/`.
@@ -764,6 +764,21 @@ Employee Login Details
 Employee ID: E101
 Password received successfully
 ```
+
+```bash
+$env:JAVA_HOME = "C:\Program Files\Java\jdk-25.0.5.0.3"
+$env:Path = "$env:JAVA_HOME\bin;$env:Path"
+
+.\catalina.bat run
+
+
+javac -cp ".;servlet-api.jar" LoginServlet.java
+
+```
+
+
+
+
 
 The password is read by the servlet but is not displayed.
 
