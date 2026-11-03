@@ -79,6 +79,9 @@ Write a simple calculator web application that takes two numbers and an operator
 ```html
 <!DOCTYPE html>
 <html>
+<head>
+  <title>Simple Calculator</title>
+</head>
 <body>
     <h2>Simple Calculator</h2>
 
