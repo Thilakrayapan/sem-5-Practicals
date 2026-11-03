@@ -707,7 +707,7 @@ int main() {
 
 ### Compilation and Running Commands
 ```bash
-usr@user:~$ gcc nfa_recognizer.c -o dfa_recognizer
+usr@user:~$ gcc dfa_recognizer.c -o dfa_recognizer
 usr@user:~$ ./dfa_recognizer
 
 ```
