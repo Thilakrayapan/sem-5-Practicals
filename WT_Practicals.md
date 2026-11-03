@@ -533,3 +533,643 @@ Clicking each link opens its respective page. The Home link returns to the main 
 ## Result
 
 Thus, a home page with three links and three separate web pages was created successfully using HTML hyperlinks.
+
+# Java Servlet Practical – Employee Login
+
+**Level:** Absolute Beginner  
+**Software:** Windows Notepad, JDK, Apache Tomcat  
+**Aim:** To write a servlet that reads parameters from an employee login page.
+
+## 1. Understand the Program
+
+We will create an employee login form. When the employee enters an ID and password and clicks Login, the servlet reads the submitted values and displays the employee ID.
+
+- `employee.html` — displays the login form.
+- `LoginServlet.java` — receives the form parameters.
+- `web.xml` — maps the URL to the servlet.
+- Apache Tomcat — runs the servlet.
+
+**Important:** Notepad is used to write code. You need Apache Tomcat and the Java Servlet API to execute the servlet.
+
+## 2. Create the Folder Structure
+
+Create a folder named `EmployeeLogin` on your Desktop.
+
+For a traditional Tomcat web application, create this structure:
+
+```text
+EmployeeLogin/
+└── WEB-INF/
+    ├── web.xml
+    ├── classes/
+    │   └── LoginServlet.class
+    └── lib/
+```
+
+Also create:
+
+```text
+EmployeeLogin/
+└── employee.html
+```
+
+The `LoginServlet.java` source file can be kept in a separate working folder. After compiling it, copy the generated `LoginServlet.class` into `WEB-INF/classes/`.
+
+## 3. Create employee.html
+
+### Steps
+
+1. Open Notepad.
+2. Copy the code below.
+3. Click **File → Save As**.
+4. Select the `EmployeeLogin` folder.
+5. Enter `employee.html` as the filename.
+6. Select **All Files** under Save as type.
+7. Click Save.
+
+### Code
+
+```html
+<html>
+<body>
+    <h2>Employee Login</h2>
+
+    <form action="LoginServlet" method="post">
+        Employee ID:
+        <input type="text" name="id"><br><br>
+
+        Password:
+        <input type="password" name="pass"><br><br>
+
+        <input type="submit" value="Login">
+    </form>
+</body>
+</html>
+```
+
+### Explanation
+
+- `action="LoginServlet"` sends the form to the servlet.
+- `method="post"` submits the form using HTTP POST.
+- `name="id"` identifies the employee ID parameter.
+- `name="pass"` identifies the password parameter.
+
+## 4. Create LoginServlet.java
+
+### Steps
+
+1. Open a new Notepad window.
+2. Paste the following code.
+3. Click **File → Save As**.
+4. Save the file as `LoginServlet.java`.
+5. Select **All Files** as the file type.
+
+### Code for Tomcat 9
+
+```java
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class LoginServlet extends HttpServlet {
+
+    public void doPost(HttpServletRequest request,
+                       HttpServletResponse response)
+                       throws IOException {
+
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        String id = request.getParameter("id");
+        String pass = request.getParameter("pass");
+
+        out.println("<html><body>");
+        out.println("<h2>Employee Login Details</h2>");
+        out.println("Employee ID: " + id + "<br>");
+        out.println("Password received successfully");
+        out.println("</body></html>");
+    }
+}
+```
+
+## 5. Create web.xml
+
+### Steps
+
+1. Open Notepad.
+2. Paste the following code.
+3. Save the file as `web.xml`.
+4. Place it inside `EmployeeLogin/WEB-INF/`.
+
+### Code
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app>
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>LoginServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/LoginServlet</url-pattern>
+    </servlet-mapping>
+</web-app>
+```
+
+### Explanation
+
+- `servlet-name` identifies the servlet in the configuration.
+- `servlet-class` specifies its Java class.
+- `url-pattern` specifies the URL used to access the servlet.
+
+## 6. Compile and Deploy the Servlet
+
+You cannot run the servlet by double-clicking `employee.html`. The Java source must be compiled against the matching Servlet API and deployed to Tomcat.
+
+### Step A: Check Java
+
+Open Command Prompt and enter:
+
+```text
+java -version
+javac -version
+```
+
+If these commands are not recognized, the JDK may be missing or not configured in PATH. Ask your lab instructor before changing shared computer settings.
+
+### Step B: Check Tomcat
+
+Find the Tomcat installation folder. For example, it might be:
+
+```text
+C:\apache-tomcat-9
+```
+
+The actual folder may be different in your lab.
+
+### Step C: Compile the servlet
+
+For a Tomcat 9 installation, open Command Prompt and change to the folder containing `LoginServlet.java`. Run the following command, replacing the example paths with your actual paths:
+
+```text
+javac -cp "C:\apache-tomcat-9\lib\servlet-api.jar" LoginServlet.java
+```
+
+If compilation succeeds, a file named `LoginServlet.class` is generated.
+
+Copy that file into:
+
+```text
+EmployeeLogin\WEB-INF\classes\
+```
+
+Create the `classes` folder if it does not exist.
+
+### Step D: Deploy to Tomcat
+
+Copy the complete `EmployeeLogin` web application folder into Tomcat's `webapps` directory.
+
+For example:
+
+```text
+C:\apache-tomcat-9\webapps\EmployeeLogin\
+```
+
+Confirm that `employee.html`, `WEB-INF/web.xml`, and `WEB-INF/classes/LoginServlet.class` are in their correct locations.
+
+Start Tomcat using the lab's configured method. On a standard installation, its startup script is located in the `bin` directory.
+
+## 7. Execute the Program
+
+Open a browser and enter:
+
+```text
+http://localhost:8080/EmployeeLogin/employee.html
+```
+
+Enter these sample values:
+
+- Employee ID: `E101`
+- Password: `abc123`
+
+Click **Login**.
+
+## 8. Expected Output
+
+```text
+Employee Login Details
+
+Employee ID: E101
+Password received successfully
+```
+
+The password is read by the servlet but is not displayed.
+
+## 9. Common Errors
+
+| Error | What to check |
+|---|---|
+| 404 Not Found | Application folder, URL and servlet mapping |
+| `javax.servlet` package missing | Servlet API classpath and Tomcat version |
+| `ClassNotFoundException` | Class name and `WEB-INF/classes` location |
+| Tomcat does not start | Server configuration and port conflicts |
+| HTML opens but Login fails | Ensure the application is deployed and Tomcat is running |
+
+## 10. Important Practical Viva Questions
+
+**1. What is a servlet?**  
+A Java server-side component that handles client requests and generates responses.
+
+**2. What is Apache Tomcat?**  
+A web server and servlet container that runs Java web applications.
+
+**3. What does `getParameter()` do?**  
+It retrieves a submitted request parameter by name.
+
+**4. What is `doPost()`?**  
+It handles HTTP POST requests.
+
+**5. What is `web.xml`?**  
+A deployment descriptor used to configure a web application, including servlet mappings.
+
+**6. What is the difference between HTML and a servlet?**  
+HTML defines the page displayed in a browser; a servlet processes requests on the server.
+
+## Result
+
+Thus, an employee login page was created, and a Java servlet was configured to read the submitted employee ID and password parameters.
+
+# 9. JavaScript Form Validation
+
+## (i) JavaScript Program to Validate the User Login Page
+
+### Aim
+To write a JavaScript program to validate the username and password fields in a login form.
+
+### Folder Structure
+
+```text
+LoginValidation/
+└── login.html
+```
+
+### Program: `login.html`
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>User Login</h2>
+
+    <form onsubmit="return validate()">
+        Username:
+        <input type="text" id="user"><br><br>
+
+        Password:
+        <input type="password" id="pass"><br><br>
+
+        <input type="submit" value="Login">
+    </form>
+
+    <script>
+        function validate() {
+            let u = document.getElementById("user").value;
+            let p = document.getElementById("pass").value;
+
+            if (u == "" || p == "") {
+                alert("Please fill all fields");
+                return false;
+            }
+
+            alert("Login form validated successfully");
+            return false;
+        }
+    </script>
+</body>
+</html>
+```
+
+### Steps to Execute
+
+1. Open Notepad.
+2. Type or paste the program.
+3. Click **File → Save As**.
+4. Enter `login.html` as the file name.
+5. Select **All Files** as Save as type.
+6. Save the file inside the `LoginValidation` folder.
+7. Double-click `login.html` to open it in a browser.
+8. Leave the fields empty and click Login to test validation.
+9. Enter both fields and click Login again.
+
+### Expected Output
+
+- If the fields are empty: `Please fill all fields`
+- If both fields are filled: `Login form validated successfully`
+
+### Result
+Thus, the JavaScript program to validate the user login page was written and executed successfully.
+
+---
+
+## (ii) JavaScript Program to Validate the Registration Form
+
+### Aim
+To write a JavaScript program to validate the name, email, password, and gender fields in a registration form.
+
+### Folder Structure
+
+```text
+RegistrationValidation/
+└── register.html
+```
+
+### Program: `register.html`
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Registration Form</h2>
+
+    <form onsubmit="return validate()">
+        Name:
+        <input type="text" id="name"><br><br>
+
+        Email:
+        <input type="text" id="email"><br><br>
+
+        Password:
+        <input type="password" id="pass"><br><br>
+
+        Gender:
+        <input type="radio" name="gender" value="Male"> Male
+        <input type="radio" name="gender" value="Female"> Female
+        <br><br>
+
+        <input type="submit" value="Register">
+    </form>
+
+    <script>
+        function validate() {
+            let n = document.getElementById("name").value;
+            let e = document.getElementById("email").value;
+            let p = document.getElementById("pass").value;
+            let g = document.querySelector(
+                'input[name="gender"]:checked'
+            );
+
+            if (n == "" || e == "" || p == "") {
+                alert("Please fill all fields");
+                return false;
+            }
+
+            if (!e.includes("@") || !e.includes(".")) {
+                alert("Enter a valid email");
+                return false;
+            }
+
+            if (p.length < 6) {
+                alert("Password must contain at least 6 characters");
+                return false;
+            }
+
+            if (g == null) {
+                alert("Please select gender");
+                return false;
+            }
+
+            alert("Registration successful");
+            return false;
+        }
+    </script>
+</body>
+</html>
+```
+
+### Steps to Execute
+
+1. Open Notepad.
+2. Type or paste the program.
+3. Click **File → Save As**.
+4. Enter `register.html` as the file name.
+5. Select **All Files** as Save as type.
+6. Save the file inside the `RegistrationValidation` folder.
+7. Double-click `register.html` to open it in a browser.
+8. Test the form with empty fields, an invalid email, a short password, and no gender selection.
+9. Enter valid sample details and click Register.
+
+### Expected Output
+
+- Empty fields: `Please fill all fields`
+- Invalid email: `Enter a valid email`
+- Password shorter than 6 characters: `Password must contain at least 6 characters`
+- Gender not selected: `Please select gender`
+- All checks passed: `Registration successful`
+
+### Result
+Thus, the JavaScript program to validate the registration form was written and executed successfully.
+
+---
+
+## Important Viva Questions
+
+**1. What is JavaScript?**  
+JavaScript is a scripting language used to make web pages interactive.
+
+**2. What is form validation?**  
+Form validation checks user input before the form is accepted.
+
+**3. What does `getElementById()` do?**  
+It selects an HTML element using its ID.
+
+**4. What does `alert()` do?**  
+It displays a message box in the browser.
+
+**5. What does `return false` do?**  
+It prevents the form from being submitted.
+
+**6. What does `length` return?**  
+It returns the number of characters in a string.
+
+**7. What is `onsubmit`?**  
+It is an event that occurs when a form is submitted.
+
+**Note:** These are beginner-level client-side validation programs. They do not authenticate a real user or save registration data to a database.
+
+# 10. DHTML and CSS Heading Programs
+
+## (i) DHTML Program to Give Different Colors for Different Heading Tags
+
+### Aim
+To write a DHTML program to apply different colors to the heading tags `<h1>` to `<h6>` using JavaScript.
+
+### Folder Structure
+
+```text
+HeadingColors/
+└── headings.html
+```
+
+### Program: `headings.html`
+
+```html
+<html>
+<head>
+    <title>Heading Colors</title>
+</head>
+<body>
+    <h1 id="h1">Heading 1</h1>
+    <h2 id="h2">Heading 2</h2>
+    <h3 id="h3">Heading 3</h3>
+    <h4 id="h4">Heading 4</h4>
+    <h5 id="h5">Heading 5</h5>
+    <h6 id="h6">Heading 6</h6>
+
+    <script>
+        document.getElementById("h1").style.color = "red";
+        document.getElementById("h2").style.color = "blue";
+        document.getElementById("h3").style.color = "green";
+        document.getElementById("h4").style.color = "orange";
+        document.getElementById("h5").style.color = "purple";
+        document.getElementById("h6").style.color = "brown";
+    </script>
+</body>
+</html>
+```
+
+### Steps to Execute
+
+1. Open Notepad.
+2. Type or paste the program.
+3. Click **File → Save As**.
+4. Enter `headings.html` as the file name.
+5. Select **All Files** as Save as type.
+6. Save it inside the `HeadingColors` folder.
+7. Double-click `headings.html` to open it in a browser.
+
+### Expected Output
+
+Six headings appear in different colors:
+
+- Heading 1 — Red
+- Heading 2 — Blue
+- Heading 3 — Green
+- Heading 4 — Orange
+- Heading 5 — Purple
+- Heading 6 — Brown
+
+### Result
+Thus, different colors were applied to the heading tags using JavaScript in a DHTML program.
+
+---
+
+## (ii) Using CSS to Implement the Behavior of `<h1>` to `<h6>` Tags
+
+### Aim
+To use CSS to set different font sizes for the heading tags `<h1>` to `<h6>`.
+
+### Folder Structure
+
+```text
+CSSHeadings/
+└── headings.html
+```
+
+### Program: `headings.html`
+
+```html
+<html>
+<head>
+    <title>CSS Heading Styles</title>
+
+    <style>
+        h1 {
+            font-size: 32px;
+        }
+
+        h2 {
+            font-size: 24px;
+        }
+
+        h3 {
+            font-size: 19px;
+        }
+
+        h4 {
+            font-size: 16px;
+        }
+
+        h5 {
+            font-size: 13px;
+        }
+
+        h6 {
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Heading 1</h1>
+    <h2>Heading 2</h2>
+    <h3>Heading 3</h3>
+    <h4>Heading 4</h4>
+    <h5>Heading 5</h5>
+    <h6>Heading 6</h6>
+</body>
+</html>
+```
+
+### Steps to Execute
+
+1. Open Notepad.
+2. Type or paste the program.
+3. Click **File → Save As**.
+4. Enter `headings.html` as the file name.
+5. Select **All Files** as Save as type.
+6. Save it inside the `CSSHeadings` folder.
+7. Double-click `headings.html` to open it in a browser.
+
+### Expected Output
+
+The browser displays six headings in decreasing font sizes.
+
+| Heading tag | Font size |
+|---|---:|
+| `<h1>` | 32px |
+| `<h2>` | 24px |
+| `<h3>` | 19px |
+| `<h4>` | 16px |
+| `<h5>` | 13px |
+| `<h6>` | 11px |
+
+These sizes approximate traditional browser defaults; actual default sizes may vary.
+
+### Result
+Thus, CSS was used to control the font sizes of heading tags from `<h1>` to `<h6>`.
+
+---
+
+## Important Viva Questions
+
+**1. What is DHTML?**  
+DHTML stands for Dynamic HTML. It combines HTML, CSS, and JavaScript to make web pages dynamic.
+
+**2. What is CSS?**  
+CSS stands for Cascading Style Sheets. It controls the appearance of HTML elements.
+
+**3. What is JavaScript used for in the first program?**  
+JavaScript changes the color of each heading dynamically.
+
+**4. What is the purpose of `getElementById()`?**  
+It selects an HTML element using its ID.
+
+**5. What does `font-size` do?**  
+It specifies the size of the text.
+
+**6. What is the difference between DHTML and CSS?**  
+DHTML combines technologies to make pages dynamic, while CSS is used to style HTML elements.
+
+
