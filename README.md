@@ -2100,5 +2100,60 @@ x = t1
 
 
 
+# modified 10 th program 
+```lex
+%{
+#include <stdio.h>
+#include <string.h>
 
+char a[20], b[20], op[5], c[20];
+%}
+
+%%
+
+"exit"      { return 0; }
+
+[^\n]+      {
+                if (sscanf(yytext, "%s = %s %s %s", a, b, op, c) == 4)
+                {
+                    printf("\nMOV AX, %s\n", b);
+
+                    if (strcmp(op, "+") == 0)
+                        printf("ADD AX, %s\n", c);
+                    else if (strcmp(op, "-") == 0)
+                        printf("SUB AX, %s\n", c);
+
+                    printf("MOV %s, AX\n", a);
+                }
+                else if (sscanf(yytext, "%s = %s", a, b) == 2)
+                {
+                    printf("\nMOV AX, %s\n", b);
+                    printf("MOV %s, AX\n", a);
+                }
+                else if (sscanf(yytext, "goto %s", a) == 1)
+                {
+                    printf("\nJMP %s\n", a);
+                }
+                else if (strchr(yytext, ':') != NULL)
+                {
+                    printf("%s\n", yytext);
+                }
+            }
+
+\n          ;
+
+%%
+
+int yywrap()
+{
+    return 1;
+}
+
+int main()
+{
+    printf("Enter Three Address Code (type exit to stop):\n");
+    yylex();
+    return 0;
+}
+```
 
