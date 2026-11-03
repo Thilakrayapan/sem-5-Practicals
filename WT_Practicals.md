@@ -1172,4 +1172,442 @@ It specifies the size of the text.
 **6. What is the difference between DHTML and CSS?**  
 DHTML combines technologies to make pages dynamic, while CSS is used to style HTML elements.
 
+# 11. HTML Lists
+
+## Aim
+To write an HTML program to illustrate the usage of ordered lists, unordered lists, and definition lists.
+
+## Folder Structure
+
+```text
+HTMLLists/
+└── lists.html
+```
+
+## Program: `lists.html`
+
+```html
+<html>
+<head>
+    <title>HTML Lists</title>
+</head>
+<body>
+    <h2>Ordered List</h2>
+    <ol>
+        <li>HTML</li>
+        <li>CSS</li>
+        <li>JavaScript</li>
+    </ol>
+
+    <h2>Unordered List</h2>
+    <ul>
+        <li>Apple</li>
+        <li>Mango</li>
+        <li>Orange</li>
+    </ul>
+
+    <h2>Definition List</h2>
+    <dl>
+        <dt>HTML</dt>
+        <dd>Used to create web pages.</dd>
+
+        <dt>CSS</dt>
+        <dd>Used to style web pages.</dd>
+
+        <dt>JavaScript</dt>
+        <dd>Used to make web pages interactive.</dd>
+    </dl>
+</body>
+</html>
+```
+
+## Steps to Execute
+
+1. Create a folder named `HTMLLists`.
+2. Open Notepad.
+3. Copy and paste the program.
+4. Click **File → Save As**.
+5. Enter `lists.html` as the file name.
+6. Select **All Files** as Save as type.
+7. Save the file inside the `HTMLLists` folder.
+8. Double-click `lists.html` to open it in a web browser.
+
+## Expected Output
+
+### Ordered List
+1. HTML
+2. CSS
+3. JavaScript
+
+### Unordered List
+- Apple
+- Mango
+- Orange
+
+## Result
+
+Thus, an HTML program illustrating ordered, unordered, and definition lists was written and executed successfully.
+
+# 12. JavaScript Program to Calculate Squares and Cubes
+
+## Aim
+To write a JavaScript program to calculate the squares and cubes of numbers from 0 to 10 and display the results in an HTML table.
+
+## Folder Structure
+
+```text
+SquaresCubes/
+└── index.html
+```
+
+## Program: `index.html`
+
+```html
+<html>
+<head>
+    <title>Squares and Cubes</title>
+</head>
+<body>
+    <h2>Squares and Cubes of Numbers</h2>
+
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>Number</th>
+            <th>Square</th>
+            <th>Cube</th>
+        </tr>
+
+        <script>
+            for (let i = 0; i <= 10; i++) {
+                document.write("<tr>");
+                document.write("<td>" + i + "</td>");
+                document.write("<td>" + (i * i) + "</td>");
+                document.write("<td>" + (i * i * i) + "</td>");
+                document.write("</tr>");
+            }
+        </script>
+    </table>
+</body>
+</html>
+```
+
+## Steps to Execute
+
+1. Create a folder named `SquaresCubes`.
+2. Open Notepad.
+3. Copy and paste the program.
+4. Click **File → Save As**.
+5. Enter `index.html` as the file name.
+6. Select **All Files** as Save as type.
+7. Save the file inside the `SquaresCubes` folder.
+8. Double-click `index.html` to open it in a web browser.
+
+## Expected Output
+
+| Number | Square | Cube |
+|---:|---:|---:|
+| 0 | 0 | 0 |
+| 1 | 1 | 1 |
+| 2 | 4 | 8 |
+| 3 | 9 | 27 |
+| 4 | 16 | 64 |
+| 5 | 25 | 125 |
+| 6 | 36 | 216 |
+| 7 | 49 | 343 |
+| 8 | 64 | 512 |
+| 9 | 81 | 729 |
+| 10 | 100 | 1000 |
+
+## Simple Explanation
+
+- `for (let i = 0; i <= 10; i++)` repeats the loop from 0 to 10.
+- `i * i` calculates the square.
+- `i * i * i` calculates the cube.
+- `document.write()` writes HTML content into the page.
+- `<tr>` creates a table row.
+- `<th>` creates a heading cell.
+- `<td>` creates a data cell.
+
+### Example
+
+For the number 3:
+
+- Square = 3 × 3 = 9
+- Cube = 3 × 3 × 3 = 27
+
+## Result
+
+Thus, the squares and cubes of numbers from 0 to 10 were calculated and displayed in an HTML table using JavaScript.
+
+# 13. Client-Side Validation of Web Form Controls Using DHTML
+
+## Aim
+
+To write a client-side script using DHTML to validate web form controls such as name, email, and password.
+
+## Folder Structure
+
+```text
+FormValidation/
+└── index.html
+```
+
+## Program
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Validation</title>
+
+    <script>
+        function validateForm() {
+            let name = document.getElementById("name").value;
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+
+            if (name.trim() == "") {
+                alert("Please enter your name");
+                return false;
+            }
+
+            if (email == "" || !email.includes("@")) {
+                alert("Please enter a valid email");
+                return false;
+            }
+
+            if (password.length < 6) {
+                alert("Password must contain at least 6 characters");
+                return false;
+            }
+
+            alert("Form submitted successfully!");
+            return true;
+        }
+    </script>
+</head>
+
+<body>
+    <h2>Registration Form</h2>
+
+    <form onsubmit="return validateForm()">
+        Name:
+        <input type="text" id="name">
+        <br><br>
+
+        Email:
+        <input type="text" id="email">
+        <br><br>
+
+        Password:
+        <input type="password" id="password">
+        <br><br>
+
+        <input type="submit" value="Register">
+        <input type="reset" value="Clear">
+    </form>
+</body>
+</html>
+```
+
+## Procedure
+
+1. Create a folder named `FormValidation`.
+2. Open Notepad and type the above program.
+3. Select **File → Save As**.
+4. Save the file as `index.html`.
+5. Set **Save as type** to `All Files`.
+6. Open `index.html` in a web browser.
+7. Enter the details and click **Register** to test the validation.
+
+## Expected Output
+
+The browser displays a registration form containing:
+
+- Name
+- Email
+- Password
+- Register button
+- Clear button
+
+When invalid data is entered, an appropriate alert message is displayed. When valid data is entered, the message **"Form submitted successfully!"** is displayed.
+
+## Explanation
+
+- `getElementById()` selects an HTML element using its ID.
+- `.value` retrieves the value entered by the user.
+- `if` checks whether the entered data satisfies the conditions.
+- `alert()` displays a message in the browser.
+- `return false` prevents form submission when validation fails.
+- `onsubmit` calls the validation function when the form is submitted.
+- `password.length < 6` checks whether the password contains at least six characters.
+
+## Result
+
+Thus, the client-side script for validating web form controls using DHTML was implemented successfully.
+
+# 14. XML Document for Customer Details
+
+## Aim
+
+To create an XML document to store customer details such as customer ID, name, address, phone number, and email.
+
+## Folder Structure
+
+```text
+CustomerDetails/
+└── customer.xml
+```
+
+## Program — `customer.xml`
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+
+<customers>
+    <customer>
+        <customer_id>101</customer_id>
+        <name>Arun Kumar</name>
+        <address>Chennai, Tamil Nadu</address>
+        <phone>9876543210</phone>
+        <email>arun@gmail.com</email>
+    </customer>
+
+    <customer>
+        <customer_id>102</customer_id>
+        <name>Priya</name>
+        <address>Coimbatore, Tamil Nadu</address>
+        <phone>9876501234</phone>
+        <email>priya@gmail.com</email>
+    </customer>
+</customers>
+```
+
+## Procedure
+
+1. Create a folder named `CustomerDetails`.
+2. Open Notepad and type the XML program.
+3. Select **File → Save As**.
+4. Enter `customer.xml` as the file name.
+5. Select **All Files** under Save as type.
+6. Choose **UTF-8** encoding and save the file.
+7. Open `customer.xml` in a web browser to view the document.
+
+## Expected Output
+
+The XML document displays two customer records containing:
+
+- Customer ID
+- Name
+- Address
+- Phone number
+- Email address
+
+## Explanation
+
+- `<?xml version="1.0" encoding="UTF-8"?>` declares the XML version and encoding.
+- `<customers>` is the root element.
+- `<customer>` represents an individual customer.
+- `<customer_id>`, `<name>`, `<address>`, `<phone>`, and `<email>` store customer information.
+- Each opening tag must have a matching closing tag.
+
+## Result
+
+Thus, an XML document for storing customer details was created successfully.
+
+
+# 14. Sort Numbers in Descending Order Using HTML and JavaScript
+
+## Aim
+
+To write an HTML page using JavaScript to accept integers from the user and display them in descending order.
+
+## Folder Structure
+
+```text
+DescendingSort/
+└── index.html
+```
+
+## Program — `index.html`
+
+```html
+<html>
+<head>
+    <title>Descending Order</title>
+</head>
+<body>
+    <h2>Sort Numbers in Descending Order</h2>
+
+    Enter numbers:
+    <input type="text" id="num" placeholder="5,2,9,1,7">
+
+    <button onclick="sort()">Sort</button>
+
+    <p id="result"></p>
+
+    <script>
+        function sort() {
+            let a = document.getElementById("num").value.split(",").map(Number);
+
+            for (let i = 0; i < a.length; i++) {
+                for (let j = i + 1; j < a.length; j++) {
+                    if (a[i] < a[j]) {
+                        let temp = a[i];
+                        a[i] = a[j];
+                        a[j] = temp;
+                    }
+                }
+            }
+
+            document.getElementById("result").innerHTML =
+                "Descending Order: " + a;
+        }
+    </script>
+</body>
+</html>
+```
+
+## Procedure
+
+1. Create a folder named `DescendingSort`.
+2. Open Notepad and type the program.
+3. Select **File → Save As**.
+4. Save the program as `index.html`.
+5. Choose **All Files** under Save as type.
+6. Open `index.html` in a web browser.
+7. Enter numbers separated by commas and click **Sort**.
+
+## Sample Input
+
+```text
+5,2,9,1,7
+```
+
+## Output
+
+```text
+Descending Order: 9,7,5,2,1
+```
+
+## Explanation
+
+- `getElementById()` gets an HTML element using its ID.
+- `.value` reads the numbers entered in the text box.
+- `split(",")` separates the numbers using commas.
+- `map(Number)` converts the input strings into numbers.
+- Two `for` loops compare the numbers.
+- `if (a[i] < a[j])` checks whether the later number is larger.
+- `temp` temporarily stores a number while swapping.
+- `innerHTML` displays the sorted result.
+
+## Result
+
+Thus, an HTML page using JavaScript to accept integers from the user and display them in descending order was implemented successfully.
+
+
+
+
+
+
 
