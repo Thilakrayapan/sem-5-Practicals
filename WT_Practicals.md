@@ -539,10 +539,6 @@ Thus, a home page with three links and three separate web pages was created succ
 
 # Java Servlet Practical – Employee Login
 
-**Level:** Absolute Beginner  
-**Software:** Windows Notepad, JDK, Apache Tomcat  
-**Aim:** To write a servlet that reads parameters from an employee login page.
-
 ## 1. Understand the Program
 
 We will create an employee login form. When the employee enters an ID and password and clicks Login, the servlet reads the submitted values and displays the employee ID.
